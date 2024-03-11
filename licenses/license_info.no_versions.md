@@ -1,0 +1,5 @@
+| Name        | License                 |
+|-------------|-------------------------|
+| PyYAML      | MIT License             |
+| ansi        | MIT License             |
+| dlr-logging | Apache Software License |

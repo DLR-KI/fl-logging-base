@@ -1,0 +1,14 @@
+[
+  {
+    "License": "MIT License",
+    "Name": "PyYAML"
+  },
+  {
+    "License": "MIT License",
+    "Name": "ansi"
+  },
+  {
+    "License": "Apache Software License",
+    "Name": "dlr-logging"
+  }
+]

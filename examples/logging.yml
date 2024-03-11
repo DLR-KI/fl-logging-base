@@ -1,0 +1,37 @@
+version: 1
+
+root:
+  level: NOTSET
+  handlers: [console_handler, file_handler]
+  propagate: yes
+
+loggers:
+  msc:
+    level: DEBUG
+  matplotlib:
+    level: WARNING
+  numba:
+    level: WARNING
+  PIL:
+    level: WARNING
+
+handlers:
+  console_handler:
+    class: logging.StreamHandler
+    stream: ext://sys.stdout
+    level: INFO
+    formatter: console_formatter
+  file_handler:
+    class: logging.handlers.TimedRotatingFileHandler
+    filename: 'logs/app.log'
+    when: 'midnight'
+    level: DEBUG
+    formatter: file_formatter
+
+formatters:
+  console_formatter:
+    class: dlr.ki.logging.formatter.colored_console.ColoredConsoleFormatter
+    format: '[%(levelcolor)s%(levelname)-8s%(colorreset)s] %(ansi.fg.grey)s[%(name)s][%(filename)s:%(lineno)d]%(ansi.fx.reset)s  %(message)s'
+  file_formatter:
+    class: dlr.ki.logging.formatter.term_escape_code.TermEscapeCodeFormatter
+    format: '%(asctime)s [%(levelname)-8s] [%(name)s][%(filename)s:%(lineno)d]  %(message)s'
