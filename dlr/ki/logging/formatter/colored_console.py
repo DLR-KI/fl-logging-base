@@ -5,6 +5,7 @@
 
 from ansi.colour.base import Graphic as AnsiGraphic
 import ansi.color as ansi
+from ansi.cursor import erase_line
 from copy import copy
 from logging import Formatter  # type: ignore [attr-defined]
 from typing import Dict
@@ -50,5 +51,6 @@ class ColoredConsoleFormatter(Formatter):
             ColoredConsoleFormatter.MAPPING["DEBUG"]
         )
         colored_record.colorreset = ansi.fx.reset
+        colored_record.clearline = erase_line() + "\r"
         colored_record.__dict__.update(self.ansi_dict)
         return super().format(colored_record)
