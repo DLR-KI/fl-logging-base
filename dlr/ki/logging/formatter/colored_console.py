@@ -51,6 +51,6 @@ class ColoredConsoleFormatter(Formatter):
             ColoredConsoleFormatter.MAPPING["DEBUG"]
         )
         colored_record.colorreset = ansi.fx.reset
-        colored_record.clearline = erase_line() + "\r"
+        colored_record.clearline = erase_line(2) + "\r"
         colored_record.__dict__.update(self.ansi_dict)
         return super().format(colored_record)
