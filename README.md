@@ -7,6 +7,8 @@ SPDX-License-Identifier: Apache-2.0
 
 # Logging Base Module
 
+[![DOI](https://zenodo.org/badge/770398220.svg)](https://doi.org/10.5281/zenodo.13951179 )
+
 This repository contains a small Python package designed to simplify the process of enabling consistent logging across multiple projects.
 Instead of copying code from one project to another, this package provides a simple, reusable solution.
 
