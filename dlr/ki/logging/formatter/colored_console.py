@@ -15,11 +15,11 @@ class ColoredConsoleFormatter(Formatter):
     """
 
     MAPPING: Dict[str, AnsiGraphic] = {
-        "DEBUG":    ansi.fx.bold + ansi.fg.grey,
-        "INFO":     ansi.fx.bold + ansi.fg.green,
-        "WARNING":  ansi.fx.bold + ansi.fg.yellow,
-        "ERROR":    ansi.fx.bold + ansi.fg.red,
-        "CRITICAL": ansi.fx.bold + ansi.fg.black + ansi.bg.red,
+        "DEBUG":    ansi.fg.grey,
+        "INFO":     ansi.fg.default,
+        "WARNING":  ansi.fg.yellow,
+        "ERROR":    ansi.fg.red,
+        "CRITICAL": ansi.fg.black + ansi.bg.red,
     }
     """
     ANSI Code mapping for each log level.
@@ -28,7 +28,7 @@ class ColoredConsoleFormatter(Formatter):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
 
-        # create a dict with all ansi functions to provide them while formating
+        # create a dict with all ansi functions to provide them while formatting
         self.ansi_dict = {}
         for key, value in ansi.fx.__dict__.items():
             if isinstance(value, AnsiGraphic):

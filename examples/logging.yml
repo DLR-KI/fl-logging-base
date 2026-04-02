@@ -34,7 +34,7 @@ handlers:
 formatters:
   console_formatter:
     class: dlr.ki.logging.formatter.colored_console.ColoredConsoleFormatter
-    format: '%(clearline)s[%(levelcolor)s%(levelname)s%(colorreset)s] %(ansi.fg.grey)s[%(name)s][%(filename)s:%(lineno)d]%(ansi.fx.reset)s  %(message)s'
+    format: '%(clearline)s[%(ansi.fg.bold)s%(levelcolor)s%(levelname)s%(colorreset)s%(ansi.fx.normal)s] %(ansi.fg.grey)s[%(name)s][%(filename)s:%(lineno)d]%(ansi.fx.reset)s  %(message)s'
   file_formatter:
     class: dlr.ki.logging.formatter.term_escape_code.TermEscapeCodeFormatter
     format: '%(asctime)s [%(levelname)s] [%(name)s][%(filename)s:%(lineno)d]  %(message)s'

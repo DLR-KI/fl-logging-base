@@ -3,7 +3,7 @@
 
 from logging import Formatter  # type: ignore [attr-defined]
 
-from .utils import non_ansi
+from dlr.ki.logging.formatter.utils import non_ansi
 
 
 class TermEscapeCodeFormatter(Formatter):

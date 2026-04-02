@@ -6,7 +6,7 @@ from typing import Any, Dict, Optional, Union
 import yaml
 import yaml.parser
 
-from .config import get_default_logging_dict
+from dlr.ki.logging.config import get_default_logging_dict
 
 
 def load_default(log_filepath: Optional[str] = None, ensure_log_dir: bool = True) -> None:

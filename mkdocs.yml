@@ -65,12 +65,13 @@ plugins:
   # - autorefs
   - api-autonav:
       # https://github.com/tlambert03/mkdocs-api-autonav?tab=readme-ov-file#configuration
-      modules: ["dlr/fl/client"]
+      modules: ["dlr/ki/logging", "dlr/ki/logging/formatter"]
       exclude_private: true
   - mkdocstrings:
       enabled: !ENV [MKDOCSTRINGS_ENABLED, true]
       handlers:
         python:
+          paths: ["dlr/ki", "dlr/ki/logging"]
           inventories:
             - url: https://docs.python.org/3/objects.inv
               domains: [std, py]
