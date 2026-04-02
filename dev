@@ -156,7 +156,7 @@ function lint-code() {
   info "lint code"
   info "flake8 version: $(uv run flake8 --version | xargs)"
   uv run flake8 "${PACKAGE_ROOT}"
-  python flake8 "${SCRIPTS_ROOT}"
+  uv run flake8 "${SCRIPTS_ROOT}"
 }
 
 function lint-doc() {
@@ -175,7 +175,7 @@ function lint-scripts() {
 
 function mypy() {
   info "type checking"
-  uv run mypy "${PACKAGE_ROOT}"
+  uv run mypy --explicit-package-bases "${PACKAGE_ROOT}"
   if find "${SCRIPTS_ROOT}" -type f -name "*.py" | grep -q .; then
     uv run mypy "${SCRIPTS_ROOT}"
   fi
