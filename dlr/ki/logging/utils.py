@@ -45,7 +45,7 @@ def welcome(
         description = ""  # fallback
         package_name = package_name or name
         if any(Distribution.discover(name=package_name)):
-            description = metadata(package_name).get("summary", "")
+            description = metadata(package_name).get("summary", "")  # type: ignore[attr-defined]
 
     logo = [" __/|__", "/_/_/_/", "  |/ DLR"]
     text_width = min(max_width, get_terminal_size().columns) - 13
