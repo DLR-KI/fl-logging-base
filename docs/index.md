@@ -22,8 +22,17 @@ A complete list of all repositories relevant to the FL platform can be found [he
 
 ## Install
 
-/// tab | pip
+/// tab | uv
     new: true
+
+```bash
+uv add "dlr-logging @ git+https://github.com/DLR-KI/fl-logging-base.git@main"
+```
+
+///
+
+/// tab | pip
+    new: false
 
 ```bash
 pip install -U "git+https://github.com/DLR-KI/fl-logging-base.git@main"
