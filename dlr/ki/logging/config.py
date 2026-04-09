@@ -1,6 +1,4 @@
-# SPDX-FileCopyrightText: 2024 Benedikt Franke <benedikt.franke@dlr.de>
-# SPDX-FileCopyrightText: 2024 Florian Heinrich <florian.heinrich@dlr.de>
-#
+# SPDX-FileCopyrightText: 2026 German Aerospace Center (DLR)
 # SPDX-License-Identifier: Apache-2.0
 
 from pathlib import Path
@@ -27,11 +25,11 @@ def get_default_logging_dict(log_filepath: Optional[str] = None, ensure_log_dir:
         "formatters": {
             "console_formatter": {
                 "class": "dlr.ki.logging.formatter.colored_console.ColoredConsoleFormatter",
-                "format": "%(clearline)s[%(levelcolor)s%(levelname)-8s%(colorreset)s] %(ansi.fg.grey)s[%(name)s][%(filename)s:%(lineno)d]%(ansi.fx.reset)s  %(message)s"  # noqa: E501
+                "format": "%(clearline)s%(levelcolor)s%(message)s%(colorreset)s"
             },
             "file_formatter": {
                 "class": "dlr.ki.logging.formatter.term_escape_code.TermEscapeCodeFormatter",
-                "format": "%(asctime)s [%(levelname)-8s] [%(name)s][%(filename)s:%(lineno)d]  %(message)s"
+                "format": "%(asctime)s [%(levelname)s] [%(name)s][%(filename)s:%(lineno)d]  %(message)s"
             }
         },
         "handlers": {
