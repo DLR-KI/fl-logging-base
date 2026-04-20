@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from importlib.metadata import metadata, Distribution
-from os import get_terminal_size
+import os
 from textwrap import wrap
 
 
@@ -54,7 +54,7 @@ def welcome(
             description = metadata(module_name).get("summary", "")  # type: ignore[attr-defined]
 
     logo = [" __/|__", "/_/_/_/", "  |/ DLR"]
-    text_width = min(max_width, get_terminal_size().columns) - 13
+    text_width = min(max_width, _get_terminal_size().columns) - 13
     desc = ["\033[1;36m" + name + "\033[0m", *wrap(description or "", text_width)]
 
     if len(desc) < 3:
@@ -63,9 +63,9 @@ def welcome(
         logo.insert(0, "")
     (desc if len(desc) < len(logo) else logo).extend([""] * abs(len(desc) - len(logo)))
 
-    welcome_msg = []
+    welcome_msg: list[str] = []
     for logo_part, text_part in zip(logo, desc, strict=True):
-        welcome_msg.append(f"{logo_part:<12} {text_part}")
+        welcome_msg.append(f"{logo_part:<12} {text_part}".rstrip())
     if (leading_empty_line is None and print_to_stdout) or leading_empty_line:
         welcome_msg.insert(0, "")
     if (tailing_empty_line is None and print_to_stdout) or tailing_empty_line:
@@ -75,3 +75,11 @@ def welcome(
     if print_to_stdout:
         print(msg)
     return msg
+
+
+def _get_terminal_size() -> os.terminal_size:
+    try:
+        # this will throw an error during unit tests since no TTY is available
+        return os.get_terminal_size()
+    except OSError:
+        return os.terminal_size((80, 24))
