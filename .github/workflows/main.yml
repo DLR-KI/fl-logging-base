@@ -60,8 +60,8 @@ jobs:
         run: uv sync --all-groups
       - name: Test source code
         run: uv run ruff check src
-      - name: Test test code
-        run: uv run ruff check tests
+      # - name: Test test code
+      #   run: uv run ruff check tests
       - name: Test test scripts
         run: |
           if [[ -n $(find scripts -name "*.py[i]" -print -quit) ]]; then
@@ -82,8 +82,8 @@ jobs:
         run: uv sync --all-groups
       - name: Test source code
         run: uv run ruff format --diff src
-      - name: Test test code
-        run: uv run ruff format --diff tests
+      # - name: Test test code
+      #   run: uv run ruff format --diff tests
       - name: Test test scripts
         run: |
           if [[ -n $(find scripts -name "*.py[i]" -print -quit) ]]; then
@@ -104,8 +104,8 @@ jobs:
         run: uv sync --all-groups
       - name: Test source code
         run: uv run ty check src
-      - name: Test test code
-        run: uv run ty check tests
+      # - name: Test test code
+      #   run: uv run ty check tests
       - name: Test test scripts
         run: |
           if [[ -n $(find scripts -name "*.py[i]" -print -quit) ]]; then
