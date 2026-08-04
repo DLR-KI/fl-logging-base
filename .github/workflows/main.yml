@@ -239,11 +239,6 @@ jobs:
           python-version: "${{ env.PYTHON_VERSION }}"
       - name: Install dependencies
         run: uv sync --all-groups
-      - name: Download coverage report artifact
-        uses: actions/download-artifact@v8
-        with:
-          name: Python ${{ env.PYTHON_VERSION }} - HTML coverage report
-          path: build/htmlcov
       - name: Build documentation
         env:
           DEPLOY: true
