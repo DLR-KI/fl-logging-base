@@ -1,6 +1,6 @@
 # SPDX-FileCopyrightText: 2026 German Aerospace Center (DLR)
-# SPDX-License-Identifier: Apache-2.0
-
+# SPDX-License-Identifier: CC0-1.0
+#
 root = true
 
 [*]
@@ -14,7 +14,10 @@ trim_trailing_whitespace = true
 [*.py]
 indent_size = 4
 
-[.vscode/*.json]
+[*.ipynb]
+indent_size = 4
+
+[{.vscode,.devcontainer}/*.json]
 indent_size = 4
 
 [{Dockerfile,Dockerfile.*}]
@@ -27,3 +30,16 @@ trim_trailing_whitespace = false
 
 [*.puml]
 insert_final_newline = false
+
+[Makefile]
+indent_style = tab
+
+[*.bat]
+indent_style = tab
+end_of_line = crlf
+
+[/LICENSES/**]
+insert_final_newline = unset
+trim_trailing_whitespace = unset
+indent_style = unset
+indent_size = unset

@@ -3,7 +3,7 @@
 
 version = 1
 SPDX-PackageName = "dlr-logging"
-SPDX-PackageSupplier = ["Benedikt Franke <benedikt.franke@dlr.de>", "Florian Heinrich <florian.heinrich@dlr.de>"]
+SPDX-PackageSupplier = ["2026 German Aerospace Center (DLR)"]
 SPDX-PackageDownloadLocation = "https://github.com/DLR-KI/fl-logging-base"
 
 [[annotations]]

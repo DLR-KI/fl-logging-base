@@ -1,0 +1,184 @@
+# SPDX-FileCopyrightText: 2026 German Aerospace Center (DLR)
+# SPDX-License-Identifier: Apache-2.0
+#
+# Configuration file for `prek`, a git hook framework written in Rust.
+# See https://prek.j178.dev for more information.
+#
+# :schema https://www.schemastore.org/prek.json
+
+default_install_hook_types = [
+  "pre-commit",
+  "commit-msg",
+  "pre-push",
+  "post-checkout",
+  "post-merge",
+  "post-rewrite"
+]
+default_stages = ["pre-commit"]
+
+[[repos]]
+hooks = [
+  {id = "check-ast"},
+  {id = "check-builtin-literals"},
+  {id = "check-case-conflict"},
+  {id = "check-docstring-first"},
+  {id = "check-executables-have-shebangs"},
+  {id = "check-json", exclude = "\\.vscode"},  # strictly json (no comments)
+  {id = "check-merge-conflict"},
+  {id = "check-shebang-scripts-are-executable"},
+  {id = "check-toml"},
+  {id = "check-yaml", exclude = "\\.copier-answers\\.yml"},
+  {id = "debug-statements"},
+  {id = "end-of-file-fixer"},
+  {id = "mixed-line-ending", args = [
+    "--fix=lf"
+  ], exclude = "docs/make.bat"},
+  {id = "trailing-whitespace", exclude_types = ["markdown"]}
+]
+repo = "https://github.com/pre-commit/pre-commit-hooks"
+rev = "v6.0.0"
+
+[[repos]]
+hooks = [
+  {id = "check-json5", files = "\\.vscode/.*\\.json"}  # json5 (incl. comments)
+]
+repo = "https://gitlab.com/bmares/check-json5"
+rev = "v1.0.1"
+
+[[repos]]
+hooks = [
+  {id = "uv-sync", name = "Synchronize uv.lock with pyproject.toml"},
+  {id = "uv-lock", name = "Check uv.lock is up to date"}
+]
+repo = "https://github.com/astral-sh/uv-pre-commit"
+rev = "0.12.1"
+
+[[repos]]
+hooks = [{id = "reuse", name = "Check license headers (REUSE)"}]
+repo = "https://github.com/fsfe/reuse-tool"
+rev = "v6.2.0"
+
+[[repos]]
+hooks = [
+  {id = "licensecheck", language = "python", name = "Check licenses of Python dependencies", args = [
+    "--zero",
+    "--ignore-packages",
+    # list of packages to ignore during prek
+    # since these are not available on Python Package Index (PyPI):
+    "dlr-logging"
+  ]}
+]
+repo = "https://github.com/FHPythonUtils/LicenseCheck"
+rev = "2026.0.8"
+
+[[repos]]
+hooks = [{id = "validate-cff", name = "Validating CITATION.cff"}]
+repo = "https://github.com/citation-file-format/cffconvert"
+rev = "b6045d78aac9e02b039703b030588d54d53262ac"
+
+[[repos]]
+hooks = [
+  {id = "editorconfig-checker", name = "run editorconfig-checker excluding markdown", exclude_types = ["markdown"]},
+  {id = "editorconfig-checker", name = "run editorconfig-checker for markdown", args = ["-disable-indent-size"], types_or = ["markdown"]}
+  # or disable indent check for all files
+  # {id = "editorconfig-checker", name = "run editorconfig-checker", args = ["-disable-indent-size"]}
+]
+repo = "https://github.com/editorconfig-checker/editorconfig-checker"
+rev = "v3.9.0"
+
+[[repos]]
+hooks = [
+  {id = "check-github-workflows"},
+  {id = "check-github-actions"},
+  {id = "check-dependabot"},
+  {id = "check-gitlab-ci"},
+  {id = "check-readthedocs"}
+]
+repo = "https://github.com/python-jsonschema/check-jsonschema"
+rev = "0.37.4"
+
+[[repos]]
+hooks = [
+  {id = "yaml2script-all", additional_dependencies = ["shellcheck-py"]}
+]
+repo = "https://gitlab.com/yaml2script/yaml2script"
+rev = "0.2.3"
+
+[[repos]]
+hooks = [
+  {id = "shellcheck"}
+]
+repo = "https://github.com/koalaman/shellcheck-precommit"
+rev = "v0.11.0"
+
+[[repos]]
+hooks = [
+  {id = "flake8", name = "Linting Python code (flake8)", additional_dependencies = [
+    "flake8-docstrings",
+    "flake8-docstrings-complete",
+    "flake8-pyproject"
+  ]}
+]
+repo = "https://github.com/PyCQA/flake8"
+rev = "7.3.0"
+
+[[repos]]
+hooks = [
+  {id = "ruff-check", name = "Linting Python code (ruff)", args = [
+    "--fix"
+  ]},
+  {id = "ruff-format", name = "Formatting Python code (ruff)"}
+]
+repo = "https://github.com/astral-sh/ruff-pre-commit"
+rev = "v0.16.1"
+
+[[repos]]
+hooks = [
+  {id = "ty", name = "Type-checking Python code (ty)"}
+]
+repo = "https://github.com/astral-sh/ty-pre-commit"
+rev = "v0.0.66"
+
+[[repos]]
+hooks = [
+  {id = "codespell", name = "Fixing common spelling mistakes", args = [
+    "--write-changes"
+  ], exclude = "^uv\\.lock$|^LICENSES/|\\.svg$"}
+]
+repo = "https://github.com/codespell-project/codespell"
+rev = "v2.4.3"
+
+# [[repos]]
+# hooks = [{id = "docformatter", name = "Fixing docstring formatting"}]
+# repo = "https://github.com/PyCQA/docformatter"
+# rev = "v1.7.8"
+
+[[repos]]
+hooks = [
+  {id = "markdownlint", name = "Fixing markdown linting errors", args = [
+    "--disable",
+    "MD013",
+    "MD033",
+    "MD059",
+    "--fix"
+  ]}
+]
+repo = "https://github.com/igorshubovych/markdownlint-cli"
+rev = "v0.49.1"
+
+[[repos]]
+hooks = [
+  {id = "pretty-format-yaml", args = [
+    "--autofix",
+    "--indent",
+    "2",
+    "--offset",
+    "2",
+    "--preserve-quotes"
+  ], exclude = "\\.copier-answers\\.yml"},
+  # {id = "pretty-format-toml", args = [
+  #   "--autofix"
+  # ]}
+]
+repo = "https://github.com/macisamuele/language-formatters-pre-commit-hooks"
+rev = "v2.16.0"

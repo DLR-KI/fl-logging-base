@@ -1,0 +1,72 @@
+# SPDX-FileCopyrightText: 2026 German Aerospace Center (DLR)
+# SPDX-License-Identifier: Apache-2.0
+
+from pathlib import Path
+from typing import Any
+
+
+def get_default_logging_dict(
+    log_filepath: str | Path | None = None, ensure_log_dir: bool = True
+) -> dict[str, Any]:
+    """
+    Get default logging configuration dict.
+
+    Args:
+        log_filepath (str | Path, optional): Log file path. Defaults to None.
+        ensure_log_dir (bool, optional):
+            Create directory for the log file if not exists. Defaults to True.
+
+    Returns:
+        dict[str, Any]: logging configuration dict
+    """
+    if log_filepath and ensure_log_dir:
+        Path(log_filepath).parent.mkdir(parents=True, exist_ok=True)
+
+    return {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "formatters": {
+            "console_formatter": {
+                "class": "dlr.ki.logging.formatter.colored_console.ColoredConsoleFormatter",
+                "format": "%(clearline)s%(levelcolor)s%(message)s%(colorreset)s",
+            },
+            "file_formatter": {
+                "class": "dlr.ki.logging.formatter.term_escape_code.TermEscapeCodeFormatter",
+                "format": "%(asctime)s [%(levelname)s] [%(name)s][%(filename)s:%(lineno)d]  %(message)s",
+            },
+        },
+        "handlers": {
+            "console_handler": {
+                "class": "logging.StreamHandler",
+                "stream": "ext://sys.stdout",
+                "level": "INFO",
+                "formatter": "console_formatter",
+            },
+            **(
+                {
+                    "file_handler": {
+                        "class": "logging.handlers.TimedRotatingFileHandler",
+                        "filename": str(log_filepath),
+                        "when": "midnight",
+                        "level": "DEBUG",
+                        "formatter": "file_formatter",
+                    }
+                }
+                if log_filepath
+                else {}
+            ),
+        },
+        "loggers": {
+            "": {
+                "handlers": ["console_handler", "file_handler"]
+                if log_filepath
+                else ["console_handler"],
+                "level": "DEBUG",
+                "propagate": True,
+            },
+            "celery": {"level": "WARNING"},
+            "matplotlib": {"level": "WARNING"},
+            "numba": {"level": "WARNING"},
+            "PIL": {"level": "WARNING"},
+        },
+    }

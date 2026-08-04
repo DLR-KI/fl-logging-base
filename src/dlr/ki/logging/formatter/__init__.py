@@ -1,6 +1,8 @@
 # SPDX-FileCopyrightText: 2026 German Aerospace Center (DLR)
 # SPDX-License-Identifier: Apache-2.0
 
+"""DLR Logging Base Formatter Module."""
+
 from dlr.ki.logging.formatter.colored_console import ColoredConsoleFormatter
 from dlr.ki.logging.formatter.term_escape_code import TermEscapeCodeFormatter
 from dlr.ki.logging.formatter.utils import non_ansi

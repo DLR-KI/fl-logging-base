@@ -81,7 +81,7 @@ classifiers = [  # Optional
   #   3 - Alpha
   #   4 - Beta
   #   5 - Production/Stable
-  "Development Status :: 3 - Alpha",
+  "Development Status :: 4 - Beta",
 
   # Indicate who your project is intended for
   "Operating System :: OS Independent",
@@ -92,11 +92,11 @@ classifiers = [  # Optional
   # that you indicate you support Python 3. These classifiers are *not*
   # checked by "pip install". See instead "python_requires" below.
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.7",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
   "Programming Language :: Python :: 3 :: Only",
 ]
 
@@ -111,28 +111,35 @@ dependencies = [ # Optional
   "PyYAML>=6.0.1",
 ]
 
-# List additional groups of dependencies here (e.g. development
-# dependencies). Users will be able to install these using the "extras"
-# syntax, for example:
+# This specification defines dependency groups, a mechanism for storing
+# package requirements in pyproject.toml files such that they are not
+# included in project metadata when it is built.
 #
-#   $ uv sync --all-extras
+# Dependency groups are suitable for internal development use-cases like
+# linting and testing, as well as for projects which are not built for
+# distribution, like collections of related scripts.
 #
-# Similar to `dependencies` above, these must be valid existing
-# projects.
-[project.optional-dependencies] # Optional
+#   $ pip install -U -e --group all
+#   $ uv sync --group all
+#   $ uv sync --all-groups
+#
+[dependency-groups] # Optional
 dev = [
-  "reuse",
-  "tox",
+  "prek>=0.3.5",
+  "shellcheck-py",
+  "reuse>=6.2.0",
+  "ruff>=0.15.5",
+  "ty>=0.0.21",
 ]
 test = [
-  "autopep8",
-  #"coverage",
-  "flake8",
+  "flake8-docstrings-complete",
+  "flake8-docstrings",
   "flake8-pyproject",
+  "flake8",
   "licensecheck",
-  "mypy",
-  #"pytest",
-  "shellcheck-py",
+  "pylint-per-file-ignores",
+  "pylint",
+  "typos",
 ]
 stubs = [
   "types-PyYAML"
@@ -148,7 +155,12 @@ doc = [
   "mkdocstrings-python",
   "pymdown-extensions",
 ]
-all = ["dlr-logging[dev,test,stubs,doc]"]
+all = [
+  {include-group = "dev"},
+  {include-group = "test"},
+  {include-group = "stubs"},
+  {include-group = "doc"},
+]
 
 # List URLs that are relevant to your project
 #
@@ -161,12 +173,12 @@ all = ["dlr-logging[dev,test,stubs,doc]"]
 # maintainers, and where to support the project financially. The key is
 # what's used to render the link text on PyPI.
 [project.urls]  # Optional
-"Homepage" = "https://github.com/DLR-KI/fl-logging-base"
-"Bug Tracker" = "https://github.com/DLR-KI/fl-logging-base/issues"
 #"Changelog" = "https://github.com/DLR-KI/fl-logging-base/blob/main/CHANGELOG.md"
-#"Funding" = "https://donate.pypi.org"
-#"Say Thanks!" = "https://saythanks.io/to/dlr-logging"
-"Source" = "https://github.com/DLR-KI/fl-logging-base"
+"Documentation" = "https://dlr-ki.github.io/fl-logging-base/"
+"Homepage" = "https://github.com/DLR-KI/fl-logging-base"
+"Issue Tracker" = "https://github.com/DLR-KI/fl-logging-base/issues"
+"Release Notes" = "https://github.com/DLR-KI/fl-logging-base/releases"
+"Source Code" = "https://github.com/DLR-KI/fl-logging-base"
 
 # The following would provide a command line executable called `fl-template`
 # which executes the function `main` inside `__main__.py` from this package when invoked.
@@ -178,14 +190,17 @@ all = ["dlr-logging[dev,test,stubs,doc]"]
 [tool.setuptools]
 # If there are data files included in your packages that need to be
 # installed, specify them here.
-packages = ["dlr.ki.logging", "dlr.ki.logging.formatter"]
-package-data = {"dlr.ki.logging" = ["py.typed"]}
+include-package-data = true
 
 [build-system]
-# These are the assumed default build requirements from pip:
-# https://pip.pypa.io/en/stable/reference/pip/#pep-517-and-518-support
-requires = ["setuptools>=43.0.0", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["uv_build>=0.10.0,<0.11.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "dlr.ki.logging"
+
+[tool.ty.src]
+include = ["src", "tests", "scripts"]
 
 [tool.uv]
 exclude-newer = "7 days"
@@ -202,95 +217,106 @@ zero = true
 
 #######################################################################################################################
 
-# flake8
-# https://flake8.pycqa.org/en/latest/user/configuration.html
+# ruff
+# https://docs.astral.sh/ruff/settings/
 
-[tool.flake8]
-max-line-length = 120
-per-file-ignores = [
-  "__init__.py: F401",
-]
-exclude = [
+[tool.ruff]
+extend-exclude = [
   ".build",
-  ".git",
-  ".github",
-  ".*_cache",
-  ".tox",
-  ".venv",
-  ".vscode",
-  "*.egg",
   "*.egg-info",
   "__pycache__",
   "Interactive-1.interactive",
 ]
-#select = "E,W,F"
+line-length = 90
+target-version = "py311"
 
-#######################################################################################################################
+[tool.ruff.format]
+preview = true
 
-# mypy
-# https://mypy.readthedocs.io/en/stable/config_file.html
+[tool.ruff.lint]
+extend-ignore = ["ANN003", "D100", "D212", "D418", "S101", "E203", "D105"]
+extend-select = ["B", "D", "E", "I", "UP", "Q", "TID252"]
+fixable = ["ALL"]
+preview = true
+# or be more strict:
+# extend-ignore = [
+#   "PLR", "T", "TRY",
+#   "ANN003", "D212", "D418", "S101",
+# ]
+# select = ["ALL"]
 
-[tool.mypy]
-# Global options
-no_implicit_optional = true
-show_error_codes = true
-#warn_return_any = true
-#warn_unused_configs = true
-#disallow_untyped_defs = true
+[tool.ruff.lint.flake8-tidy-imports]
+ban-relative-imports = "all"
 
-# Per-module options
+[tool.ruff.lint.isort]
+# https://docs.astral.sh/ruff/settings/#lintisort
+force-sort-within-sections = true
+lines-after-imports = 2
 
-# Ignore missing imports (missing stubs or py.typed)
-[[tool.mypy.overrides]]
-module = [
-  "setuptools.*",
-]
-ignore_missing_imports = true
-
-#######################################################################################################################
-
-# coverage
-# https://coverage.readthedocs.io/en/latest/config.html
-
-[tool.coverage.run]
-branch = true
-source = "dlr.ki.logging"
-
-[tool.coverage.report]
-# Regexes for lines to exclude from consideration
-exclude_lines = [
-  # Have to re-enable the standard pragma
-  "pragma: no cover",
-  "@overload",
-
-  # Don't complain about missing debug-only code:
-  "def __repr__",
-  "if self\\.debug",
-
-  # Don't complain if tests don't hit defensive assertion code:
-  "raise AssertionError",
-  "raise NotImplementedError",
-
-  # Don't complain if non-runnable code isn't run:
-  "if 0:",
-  "if Flase:",
-  "if __name__ == .__main__.:",
-
-  # Don't complain about abstract methods, they aren't run:
-  "@(abc\\.)?abstractmethod",
+[tool.ruff.lint.per-file-ignores]
+"src/dlr/ki/logging/config.py" = ["E501"]
+"tests/**/test_*.py" = [
+  "S101",
+  "ANN201",
+  "ANN205",
+  "D",
+  "E501",
+  "PLR0904",
+  "PLC2701",
+  "PLC0415",
+  "PLR2004",
+  "SLF001",
+  "S307"
 ]
 
-ignore_errors = true
-skip_empty = true
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+# max-doc-length = 80
 
-[tool.coverage.html]
-title = "Coverage report for dlr.ki.logging"
+##########################################################################################################################
 
-#######################################################################################################################
+# flake8
+# https://flake8.pycqa.org/en/latest/user/configuration.html
 
-# pytest
-# https://docs.pytest.org/en/latest
+[tool.flake8]
+check-return-types = true
+extend-ignore = ["DCO010", "DCO060"]
+max-complexity = "10"
+max-line-length = "90"
+per-file-ignores = ["src/dlr/ki/logging/config.py:E501"]
+select = "DCO, DOC"
+style = "google"
 
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-python_files = "test_*.py"
+############################################################################################################################
+
+# pylint
+# https://pylint.pycqa.org/en/latest/user_guide/run.html#command
+
+[tool.pylint.main]
+extension-pkg-allow-list = []
+load-plugins = ["pylint_per_file_ignores"]
+recursive = true
+
+[tool.pylint.'MESSAGES CONTROL']
+disable = "C0114"
+# C0114: missing-module-docstring
+max-line-length = "90"
+
+[tool.pylint.'MESSAGES CONTROL'.per-file-ignores]
+"docs/conf.py" = "C0103,W0622"  # for copyright notice
+# C0103: invalid-name (to ignore constant name not UPPER_CASE)
+# W0622: redefined-builtin
+"src/dlr/ki/logging/config.py" = "C0301"
+# C0301: line-too-long
+"tests/**/*" = "C0114,C0116,R0903,R0904,W0212"
+# C0114: missing-module-docstring
+# C0116: missing-function-docstring
+# R0903: too-few-public-methods
+# R0904: too-many-public-methods
+# W0212: protected-access
+
+[tool.pylint.SIMILARITIES]
+ignore-comments = "yes"
+ignore-docstrings = "yes"
+ignore-imports = "yes"
+min-similarity-lines = 10

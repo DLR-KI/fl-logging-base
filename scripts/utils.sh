@@ -1,4 +1,4 @@
-#!/bin/bash
+# shellcheck shell=bash
 
 # SPDX-FileCopyrightText: 2026 German Aerospace Center (DLR)
 # SPDX-License-Identifier: Apache-2.0
@@ -9,7 +9,7 @@
 # This script contains utility functions and global variables.
 ###############################################################################
 # Usage:
-# Asuming this script is in the same directory:
+# Assuming this script is in the same directory:
 #   source "$(dirname "${BASH_SOURCE[0]}")/utils.sh"
 #   info "Hello World"
 ###############################################################################
@@ -70,6 +70,6 @@ trap_add() {
 # inherit them unless the trace attribute is set
 declare -f -t trap_add
 
-# change working diretory to project root but return later
+# change working directory to project root but return later
 trap_add "cd $(pwd)" EXIT SIGINT SIGQUIT SIGABRT SIGTERM
 cd "$(dirname "$(dirname "$(realpath "${BASH_SOURCE[0]}")")")" || exit 99

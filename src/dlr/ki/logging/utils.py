@@ -1,9 +1,10 @@
 # SPDX-FileCopyrightText: 2026 German Aerospace Center (DLR)
 # SPDX-License-Identifier: Apache-2.0
 
-from importlib.metadata import metadata, Distribution
+from importlib.metadata import Distribution, metadata
 import os
 from textwrap import wrap
+from typing import cast
 
 
 def welcome(
@@ -51,7 +52,9 @@ def welcome(
         description = ""  # fallback
         module_name = module_name or name
         if any(Distribution.discover(name=module_name)):
-            description = metadata(module_name).get("summary", "")  # type: ignore[attr-defined]
+            # Note: cast is not necessary but solves the issue that ty is behaving
+            # differently in prek and while being called via uv run ty.
+            description = cast(dict, metadata(module_name)).get("summary", "")
 
     logo = [" __/|__", "/_/_/_/", "  |/ DLR"]
     text_width = min(max_width, _get_terminal_size().columns) - 13

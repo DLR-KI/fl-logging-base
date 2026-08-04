@@ -9,7 +9,6 @@ def non_ansi(text: str) -> str:
     Remove ansi escape characters from text.
 
     References:
-
     - <https://stackoverflow.com/a/14693789>
 
     Args:

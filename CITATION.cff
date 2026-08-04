@@ -5,7 +5,7 @@
 # Visit https://bit.ly/cffinit to generate yours today!
 
 cff-version: 1.2.0
-title: DLR Federated Learning Logging Base
+title: Logging Base Module
 message: >-
   If you use this software, please cite it using the
   metadata from this file.
@@ -21,11 +21,18 @@ authors:
     email: benedikt.franke@dlr.de
     affiliation: German Aerospace Center (DLR)
     orcid: 'https://orcid.org/0000-0003-0202-2804'
+  - name: German Aerospace Center (DLR)
+    address: Linder Höhe
+    city: Cologne
+    post-code: '51147'
+    region: NRW
+    alias: DLR
+    website: 'https://www.dlr.de/en'
+    tel: '+49 2203 6010'
 identifiers:
   - type: doi
     value: 10.5281/zenodo.13951180
 repository-code: 'https://github.com/DLR-KI/fl-logging-base'
 url: 'https://dlr-ki.github.io/fl-logging-base/'
 keywords:
-  - Federaed Machine Learning
-  - Python
+  - logging

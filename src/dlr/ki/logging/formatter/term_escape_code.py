@@ -7,9 +7,7 @@ from dlr.ki.logging.formatter.utils import non_ansi
 
 
 class TermEscapeCodeFormatter(Formatter):
-    """
-    A class to strip the escape codes from the message.
-    """
+    """A class to strip the escape codes from the message."""
 
     def formatMessage(self, record):
         """

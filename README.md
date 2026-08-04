@@ -36,7 +36,7 @@ They offer a more user-friendly interface and comprehensive guides to get you st
 # create virtual environment and install dependencies
 ./dev install
 # or just
-uv sync --all-extras
+uv sync --all-groups
 ```
 
 ## Helpers
@@ -97,9 +97,17 @@ Args:
     ensure_log_dir (bool, optional): Create directory for the log file if not exists. Defaults to True.
 
 Returns:
-    Dict[str, Any]: logging configuration dict
+    dict[str, Any]: logging configuration dict
 """
 ```
+
+## Citation
+
+For accurate citation, refer to the corresponding metadata in the [CITATION.cff](CITATION.cff) file associated with this work.
+
+## License
+
+Please see the file [LICENSE.md](LICENSE.md) for further information about how the content is licensed.
 
 ## Credits
 

@@ -18,18 +18,18 @@ updates:
     directory: /
     schedule:
       interval: monthly
-    open-pull-requests-limit: 0  # prevents normal PRs, allows security PRs
+    open-pull-requests-limit: 0
 
   # Maintain dependencies for GitHub actions
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: monthly
-    open-pull-requests-limit: 0  # prevents normal PRs, allows security PRs
+    open-pull-requests-limit: 0
 
   # Maintain dependencies for pre-commit config
   - package-ecosystem: pre-commit
     directory: /
     schedule:
       interval: monthly
-    open-pull-requests-limit: 0  # prevents normal PRs, allows security PRs
+    open-pull-requests-limit: 0
